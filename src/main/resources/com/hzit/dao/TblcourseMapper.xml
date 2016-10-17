@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzit.dao.TblcourseMapper">
+    <select id="findAll" resultMap="tblcourseMap">
+        SELECT * FROM tblteacher JOIN tblcourse ON tblcourse.TeaId=tblteacher.TeaId
+    </select>
+    <resultMap id="tblcourseMap" type="com.hzit.entity.Tblcourse">
+        <result column="CourseId" property="courseId"></result>
+        <result column="CourseName" property="courseName"></result>
+        <association property="tblteacher" javaType="com.hzit.entity.Tblteacher">
+            <result column="TeaId" property="teaId"></result>
+            <result column="TeaName" property="teaName"></result>
+        </association>
+    </resultMap>
+</mapper>

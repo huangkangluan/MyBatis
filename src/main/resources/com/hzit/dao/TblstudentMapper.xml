@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzit.dao.TblstudentMapper">
+    <select id="findByType" resultType="student">
+        SELECT * FROM tblstudent WHERE 1=1
+        <choose>
+            <when test="flag==1">
+                AND stuAge BETWEEN 10 AND 20
+            </when>
+            <when test="flag==2">
+                AND stuAge BETWEEN 20 AND 30
+            </when>
+            <when test="flag==3">
+                AND stuAge BETWEEN 30 AND 50
+            </when>
+        </choose>
+    </select>
+    <select id="findTiaoJian" parameterType="com.hzit.entity.TblstudentTiaoJian" resultType="student">
+        SELECT * FROM tblstudent WHERE 1=1
+        <if test="name!=null">
+            AND stuName LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="minage!=0">
+            AND stuAge >=#{minage}
+        </if>
+        <if test="maxage!=0">
+            AND stuAge &lt;=#{maxage}
+        </if>
+
+    </select>
+    <select id="findTblstudent" resultType="student" parameterType="student">
+        SELECT * FROM tblstudent WHERE 1=1
+        <if test="stuName!=null">
+--             like模糊查询需要用到concat拼接
+            AND stuName like CONCAT('%',#{stuName},'%')
+        </if>
+        <if test="stuAge!=null">
+            AND stuAge=#{stuAge}
+        </if>
+        <if test="stuSex!=null">
+            AND stuSex=#{stuSex}
+        </if>
+        <if test="stuPass!=null">
+            AND stuPass=#{stuPass}
+        </if>
+    </select>
+    <select id="find_StuName_StuAge" parameterType="java.util.Map" resultType="student">
+        <if test="stuName==null">
+            SELECT * FROM tblstudent WHERE stuAge=#{stuAge}
+        </if>
+        <if test="stuName!=null">
+            SELECT * FROM tblstudent WHERE stuName=#{stuName} AND stuAge=#{stuName}
+        </if>
+    </select>
+    <select id="findAll" resultType="student">
+        select * from tblstudent
+    </select>
+    <select id="findByid" resultType="student" parameterType="String">
+        select * from tblstudent where stuId=#{stuId}
+    </select>
+    <insert id="addTblstudent" parameterType="student">
+        insert into tblstudent VALUES (#{stuId},#{stuName},#{stuAge},#{stuSex},#{stuPass})
+    </insert>
+    <update id="updateTblstudent" parameterType="student">
+        UPDATE tblstudent SET stuName=#{stuName},stuAge=#{stuAge},stuSex=#{stuSex},stuPass=#{stuPass} WHERE stuId=#{stuId}
+    </update>
+    <delete id="deleteTblstudent" parameterType="java.lang.String">
+        DELETE FROM Tblstudent WHERE stuId=#{stuId}
+    </delete>
+</mapper>

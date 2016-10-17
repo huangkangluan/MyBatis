@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzit.dao.TblteacherMapper">
+    <select id="findAll" resultMap="tblteacherMap">
+        SELECT * FROM tblteacher JOIN tblclass ON tblteacher.TeaId=tblclass.Cteaid
+    </select>
+    <!--<select id="findByid" resultMap="tblteacherMap">-->
+       <!--SELECT * FROM tblteacher WHERE TeaId=#{teaid}-->
+    <!--</select>-->
+    <!--<insert id="addTblteacher" parameterMap="tblteacherMap">-->
+        <!--INSERT INTO tblteacher VALUES (#{teaId},#{teaName})-->
+    <!--</insert>-->
+    <!--<update id="updateTblteacher" parameterMap="tblteacherMap">-->
+        <!--UPDATE tblteacher SET TeaName=#{teaName} WHERE TeaId=#{teaName}-->
+    <!--</update>-->
+    <!--<delete id="deleteTblteacher" parameterMap="tblteacherMap">-->
+        <!--DELETE FROM tblteacher WHERE teaId=#{teaid}-->
+    <!--</delete>-->
+    <resultMap id="tblteacherMap" type="com.hzit.entity.Tblteacher">
+        <id column="TeaId" property="teaId"></id>
+        <result column="TeaName" property="teaName"></result>
+        <collection property="tblclassList" ofType="com.hzit.entity.Tblclass">
+            <id column="Cid" property="cid"></id>
+            <result column="Cname" property="cname"></result>
+        </collection>
+    </resultMap>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzit.dao.TblscoreMapper">
+    <select id="findAll" resultMap="tblscoreMap">
+        SELECT * FROM tblscore JOIN tblstudent ON tblscore.StuId=tblstudent.StuId
+               JOIN tblcourse ON tblscore.CourseId=tblcourse.CourseId
+    </select>
+    <resultMap id="tblscoreMap" type="com.hzit.entity.Tblscore">
+        <result column="Score" property="score"></result>
+        <association property="tblstudent" javaType="com.hzit.entity.Tblstudent">
+            <result column="StuId" property="stuId"></result>
+            <result column="StuName" property="stuName"></result>
+            <result column="StuAge" property="stuAge"></result>
+            <result column="StuSex" property="stuSex"></result>
+            <result column="StuPass" property="stuPass"></result>
+        </association>
+        <association property="tblcourse" javaType="com.hzit.entity.Tblcourse">
+            <result column="CourseId" property="courseId"></result>
+            <result column="CourseName" property="courseName"></result>
+        </association>
+    </resultMap>
+</mapper>
